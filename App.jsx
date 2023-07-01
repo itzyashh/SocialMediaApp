@@ -6,12 +6,14 @@ import {
   ScrollView,
   Pressable,
   FlatList,
+  Image,
 } from 'react-native';
 import React from 'react';
 import Title from './src/components/Title';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEnvelope} from '@fortawesome/free-regular-svg-icons';
 import UserStory from './src/components/UserStory';
+import UserPost from './src/components/UserPost';
 
 const App = () => {
   const data = [
@@ -48,19 +50,95 @@ const App = () => {
       firstName: 'Shizuka',
     },
   ];
-  let pageSize = 4;
-  const [loading, setLoading] = React.useState(false);
+  const posts = [
+    {
+      id: 1,
+      firstName: 'Allison',
+      lastName: 'Becker',
+      location: 'Sukabumi, Jawa Barat',
+      likes: 1201,
+      comments: 24,
+      bookmarks: 55,
+    },
+    {
+      id: 2,
+      firstName: 'Jennifer',
+      lastName: 'Wilkson',
+      location: 'Pondok Leungsir, Jawa Barat',
+      likes: 1201,
+      comments: 24,
+      bookmarks: 55,
+    },
+    {
+      id: 3,
+      firstName: 'Alvaro',
+      lastName: 'Jones',
+      location: 'Sukabumi, Jawa Barat',
+      likes: 1201,
+      comments: 24,
+      bookmarks: 55,
+    },
+    {
+      id: 4,
+      firstName: 'John',
+      lastName: 'Doe',
+      location: 'Jakarta, Indonesia',
+      likes: 500,
+      comments: 12,
+      bookmarks: 30,
+    },
+    {
+      id: 5,
+      firstName: 'Emily',
+      lastName: 'Smith',
+      location: 'Bandung, Jawa Barat',
+      likes: 750,
+      comments: 15,
+      bookmarks: 42,
+    },
+    {
+      id: 6,
+      firstName: 'Michael',
+      lastName: 'Johnson',
+      location: 'Bekasi, Jawa Barat',
+      likes: 900,
+      comments: 18,
+      bookmarks: 25,
+    },
+    {
+      id: 7,
+      firstName: 'Sophia',
+      lastName: 'Taylor',
+      location: 'Depok, Jawa Barat',
+      likes: 1100,
+      comments: 20,
+      bookmarks: 38,
+    },
+  ];
+
+  const pageSize = 4;
+  const pageSizePost = 2;
   const [pageNumber, setPageNumber] = React.useState(1);
+  const [pageNumberPost, setPageNumberPost] = React.useState(1);
+  const [loading, setLoading] = React.useState(false);
+  const [loadingPost, setLoadingPost] = React.useState(false);
   const [renderedData, setRenderedData] = React.useState(
     data.slice(0, pageSize),
   );
-  const pagination = (data, pageNumber, pageSize) => {
+  const [renderedPost, setRenderedPost] = React.useState(
+    posts.slice(0, pageSizePost),
+  );
+  const pagination = (data, pageNumber, pageSiz, posts = false) => {
     let startIndex = (pageNumber - 1) * pageSize;
     console.log(startIndex);
     if (startIndex >= data.length) {
       return [];
     }
-    setPageNumber(pageNumber);
+    if (!posts) {
+      setPageNumber(pageNumber);
+    } else {
+      setPageNumberPost(pageNumber);
+    }
     return data.slice(startIndex, startIndex + pageSize);
   };
   return (
@@ -94,6 +172,34 @@ const App = () => {
             showsHorizontalScrollIndicator={false}
             data={renderedData}
             renderItem={({item}) => <UserStory firstName={item.firstName} />}
+          />
+        </View>
+        <View style={styles.userPostContainer}>
+          <FlatList
+            keyExtractor={item => item.id.toString()}
+            onEndReachedThreshold={0.5}
+            onEndReached={() => {
+              if (!loadingPost) {
+                setLoadingPost(true);
+                setRenderedPost(prev => [
+                  ...prev,
+                  ...pagination(posts, pageNumberPost + 1, pageSizePost, true),
+                ]);
+                setLoadingPost(false);
+              }
+            }}
+            showsVerticalScrollIndicator={false}
+            data={renderedPost}
+            renderItem={({item}) => (
+              <UserPost
+                firstName={item.firstName}
+                lastName={item.lastName}
+                location={item.location}
+                likes={item.likes}
+                comments={item.comments}
+                bookmarks={item.bookmarks}
+              />
+            )}
           />
         </View>
       </ScrollView>
@@ -139,6 +245,12 @@ const styles = StyleSheet.create({
     paddingLeft: 28,
     marginTop: 12,
     paddingRight: 27,
+  },
+  userPostContainer: {
+    marginTop: 30,
+    paddingHorizontal: 24,
+    borderWidth: 1,
+    height: '100%',
   },
 });
 
