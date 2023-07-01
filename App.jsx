@@ -43,8 +43,26 @@ const App = () => {
       id: 7,
       firstName: 'Sunio',
     },
+    {
+      id: 8,
+      firstName: 'Shizuka',
+    },
   ];
-
+  let pageSize = 4;
+  const [loading, setLoading] = React.useState(false);
+  const [pageNumber, setPageNumber] = React.useState(1);
+  const [renderedData, setRenderedData] = React.useState(
+    data.slice(0, pageSize),
+  );
+  const pagination = (data, pageNumber, pageSize) => {
+    let startIndex = (pageNumber - 1) * pageSize;
+    console.log(startIndex);
+    if (startIndex >= data.length) {
+      return [];
+    }
+    setPageNumber(pageNumber);
+    return data.slice(startIndex, startIndex + pageSize);
+  };
   return (
     <SafeAreaView>
       <ScrollView>
@@ -60,11 +78,21 @@ const App = () => {
 
         <View style={styles.userStoryContainer}>
           <FlatList
+            keyExtractor={item => item.id.toString()}
             onEndReachedThreshold={0.5}
-            onEndReached={() => console.log('end reached')}
-            showsHorizontalScrollIndicator={false}
+            onEndReached={() => {
+              if (!loading) {
+                setLoading(true);
+                setRenderedData(prev => [
+                  ...prev,
+                  ...pagination(data, pageNumber + 1, pageSize),
+                ]);
+                setLoading(false);
+              }
+            }}
             horizontal
-            data={data}
+            showsHorizontalScrollIndicator={false}
+            data={renderedData}
             renderItem={({item}) => <UserStory firstName={item.firstName} />}
           />
         </View>
