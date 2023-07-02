@@ -128,7 +128,7 @@ const App = () => {
   const [renderedPost, setRenderedPost] = React.useState(
     posts.slice(0, pageSizePost),
   );
-  const pagination = (data, pageNumber, pageSiz, posts = false) => {
+  const pagination = (data, pageNumber, pageSize, posts = false) => {
     let startIndex = (pageNumber - 1) * pageSize;
     console.log(startIndex);
     if (startIndex >= data.length) {
@@ -143,66 +143,70 @@ const App = () => {
   };
   return (
     <SafeAreaView>
-      <ScrollView>
-        <View style={styles.header}>
-          <Title title="Let's Explore" />
-          <Pressable style={styles.iconContainer}>
-            <View style={styles.notiBubble}>
-              <Text style={styles.notiInput}>2</Text>
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <View style={styles.header}>
+              <Title title="Let's Explore" />
+              <Pressable style={styles.iconContainer}>
+                <View style={styles.notiBubble}>
+                  <Text style={styles.notiInput}>2</Text>
+                </View>
+                <FontAwesomeIcon size={20} icon={faEnvelope} />
+              </Pressable>
             </View>
-            <FontAwesomeIcon size={20} icon={faEnvelope} />
-          </Pressable>
-        </View>
 
-        <View style={styles.userStoryContainer}>
-          <FlatList
-            keyExtractor={item => item.id.toString()}
-            onEndReachedThreshold={0.5}
-            onEndReached={() => {
-              if (!loading) {
-                setLoading(true);
-                setRenderedData(prev => [
-                  ...prev,
-                  ...pagination(data, pageNumber + 1, pageSize),
-                ]);
-                setLoading(false);
-              }
-            }}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={renderedData}
-            renderItem={({item}) => <UserStory firstName={item.firstName} />}
-          />
-        </View>
-        <View style={styles.userPostContainer}>
-          <FlatList
-            keyExtractor={item => item.id.toString()}
-            onEndReachedThreshold={0.5}
-            onEndReached={() => {
-              if (!loadingPost) {
-                setLoadingPost(true);
-                setRenderedPost(prev => [
-                  ...prev,
-                  ...pagination(posts, pageNumberPost + 1, pageSizePost, true),
-                ]);
-                setLoadingPost(false);
-              }
-            }}
-            showsVerticalScrollIndicator={false}
-            data={renderedPost}
-            renderItem={({item}) => (
-              <UserPost
-                firstName={item.firstName}
-                lastName={item.lastName}
-                location={item.location}
-                likes={item.likes}
-                comments={item.comments}
-                bookmarks={item.bookmarks}
+            <View style={styles.userStoryContainer}>
+              <FlatList
+                keyExtractor={item => item.id.toString()}
+                onEndReachedThreshold={0.5}
+                onEndReached={() => {
+                  if (!loading) {
+                    setLoading(true);
+                    setRenderedData(prev => [
+                      ...prev,
+                      ...pagination(data, pageNumber + 1, pageSize),
+                    ]);
+                    setLoading(false);
+                  }
+                }}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={renderedData}
+                renderItem={({item}) => (
+                  <UserStory firstName={item.firstName} />
+                )}
               />
-            )}
-          />
-        </View>
-      </ScrollView>
+            </View>
+          </>
+        }
+        keyExtractor={item => item.id.toString()}
+        onEndReachedThreshold={0.5}
+        onEndReached={() => {
+          if (!loadingPost) {
+            setLoadingPost(true);
+            setRenderedPost(prev => [
+              ...prev,
+              ...pagination(posts, pageNumberPost + 1, pageSizePost, true),
+            ]);
+            setLoadingPost(false);
+          }
+        }}
+        showsVerticalScrollIndicator={false}
+        data={renderedPost}
+        renderItem={({item}) => (
+          <View style={styles.userPostContainer}>
+            <UserPost
+              firstName={item.firstName}
+              lastName={item.lastName}
+              location={item.location}
+              likes={item.likes}
+              comments={item.comments}
+              bookmarks={item.bookmarks}
+            />
+          </View>
+        )}
+      />
     </SafeAreaView>
   );
 };
@@ -249,8 +253,6 @@ const styles = StyleSheet.create({
   userPostContainer: {
     marginTop: 30,
     paddingHorizontal: 24,
-    borderWidth: 1,
-    height: '100%',
   },
 });
 
