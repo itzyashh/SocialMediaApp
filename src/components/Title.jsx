@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {scaleFontSize} from '../../assets/styles/scaling';
 
 const Title = props => {
   return (
@@ -18,7 +19,7 @@ export default Title;
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 24,
+    fontSize: scaleFontSize(24),
     color: '#022150',
     fontFamily: 'Inter',
     letterSpacing: 0.48,
