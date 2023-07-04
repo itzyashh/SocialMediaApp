@@ -9,6 +9,11 @@ import {
   faHeart,
 } from '@fortawesome/free-regular-svg-icons';
 import {faEllipsis} from '@fortawesome/free-solid-svg-icons';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/styles/scaling';
 
 const UserPost = props => {
   return (
@@ -29,7 +34,7 @@ const UserPost = props => {
           <View
             style={{
               flexDirection: 'column',
-              marginLeft: 10,
+              marginLeft: horizontalScale(10),
             }}>
             <Text style={styles.name}>
               {props.firstName} {props.lastName}
@@ -44,8 +49,7 @@ const UserPost = props => {
       </View>
       <View style={styles.postImageContainer}>
         <Image
-          resizeMode="stretch"
-          style={{width: 380, height: 220}}
+          resizeMode="cover"
           source={require('../../assets/images/default_post.png')}
         />
       </View>
@@ -67,7 +71,6 @@ const UserPost = props => {
         style={{
           borderBottomColor: '##EFF2F6',
           borderBottomWidth: 1,
-          marginBottom: 20,
         }}
       />
     </View>
@@ -97,12 +100,12 @@ const styles = StyleSheet.create({
   },
   name: {
     color: '#000',
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontFamily: 'Inter',
     fontWeight: '500',
     letterSpacing: 0.16,
-    lineHeight: 19,
-    marginBottom: 5,
+    lineHeight: scaleFontSize(19),
+    marginBottom: scaleFontSize(5),
   },
   location: {
     color: '#79869F',
@@ -114,30 +117,30 @@ const styles = StyleSheet.create({
   iconContainer: {alignSelf: 'center'},
   threeDots: {
     color: '#79869F',
-    fontSize: 32,
+    fontSize: scaleFontSize(32),
     letterSpacing: 0.32,
-    paddingBottom: 15,
+    paddingBottom: verticalScale(15),
     fontWeight: '600',
   },
   postImageContainer: {
-    marginVertical: 16,
+    marginVertical: verticalScale(16),
   },
   userPostStats: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 23,
-    paddingLeft: 5,
+    marginBottom: verticalScale(23),
+    paddingLeft: horizontalScale(5),
   },
   stat: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 25,
+    marginRight: horizontalScale(25),
     gap: 3,
   },
   statText: {
     color: '#79869F',
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontFamily: 'Inter',
     fontWeight: '400',
     letterSpacing: 0.28,

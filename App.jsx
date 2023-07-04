@@ -14,6 +14,11 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEnvelope} from '@fortawesome/free-regular-svg-icons';
 import UserStory from './src/components/UserStory';
 import UserPost from './src/components/UserPost';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from './assets/styles/scaling';
 
 const App = () => {
   const data = [
@@ -217,19 +222,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 30,
-    paddingLeft: 26,
-    paddingRight: 17,
+    paddingTop: verticalScale(30),
+    paddingLeft: horizontalScale(26),
+    paddingRight: horizontalScale(17),
   },
   iconContainer: {
     padding: 12,
-    borderRadius: 100,
+    borderRadius: horizontalScale(100),
     backgroundColor: '##F9FAFB',
   },
   notiBubble: {
-    width: 10,
-    height: 10,
-    borderRadius: 10,
+    width: horizontalScale(10),
+    height: horizontalScale(10),
+    zIndex: 1,
+    borderRadius: horizontalScale(10),
     backgroundColor: '#F35BAC',
     flex: 1,
     justifyContent: 'center',
@@ -239,20 +245,19 @@ const styles = StyleSheet.create({
     right: 5,
   },
   notiInput: {
-    fontSize: 6,
+    fontSize: scaleFontSize(6),
     fontFamily: 'Inter',
     fontWeight: '600',
-    letterSpacing: 0.12,
     color: '#FFF',
   },
   userStoryContainer: {
-    paddingLeft: 28,
-    marginTop: 12,
+    paddingLeft: horizontalScale(14),
+    marginTop: verticalScale(12),
     paddingRight: 27,
   },
   userPostContainer: {
-    marginTop: 30,
-    paddingHorizontal: 24,
+    marginTop: verticalScale(30),
+    paddingHorizontal: horizontalScale(22),
   },
 });
 

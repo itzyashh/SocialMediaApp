@@ -1,6 +1,11 @@
 import {View, Text, StyleSheet, Image} from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/styles/scaling';
 
 const UserStory = props => {
   return (
@@ -22,21 +27,21 @@ UserStory.propTypes = {
 
 const styles = StyleSheet.create({
   storyContainer: {
-    margin: 12,
+    margin: horizontalScale(12),
   },
   userImageContainer: {
     borderWidth: 1,
     borderColor: '#F35BAC',
-    padding: 3,
-    borderRadius: 50,
+    padding: horizontalScale(3),
+    borderRadius: horizontalScale(50),
   },
   name: {
     color: '#022150',
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontFamily: 'Inter',
     fontWeight: '500',
     letterSpacing: 0.14,
-    marginTop: 8,
+    marginTop: verticalScale(8),
     textAlign: 'center',
   },
 });
