@@ -155,9 +155,7 @@ const Home = ({navigation}) => {
           <>
             <View style={styles.header}>
               <Title title="Let's Explore" />
-              <Pressable
-                onPress={() => navigation.navigate(Routes.Profile)}
-                style={styles.iconContainer}>
+              <Pressable style={styles.iconContainer}>
                 <View style={styles.notiBubble}>
                   <Text style={styles.notiInput}>2</Text>
                 </View>
