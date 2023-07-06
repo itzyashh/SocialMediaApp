@@ -13,6 +13,7 @@ import {
   scaleFontSize,
   verticalScale,
 } from '../../../assets/styles/scaling';
+import {ProfileTabNavigation} from '../../../navigation/MainNavigation';
 
 const Profile = () => {
   return (
@@ -46,6 +47,9 @@ const Profile = () => {
           </View>
         </View>
         <View style={styles.separator} />
+        <View style={{height: '100%', marginTop: verticalScale(14)}}>
+          <ProfileTabNavigation />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
